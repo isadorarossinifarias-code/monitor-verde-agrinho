@@ -5,159 +5,338 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor Verde - Agrinho 2026</title>
     <style>
+        /* Configurações Gerais e Cores do Agro */
         :root {
-            --primary: #2e7d32;
-            --secondary: #81c784;
-            --dark: #1b5e20;
-            --light: #f1f8e9;
+            --verde-escuro: #1b4332;
+            --verde-principal: #2d6a4f;
+            --verde-folha: #52b788;
+            --verde-claro: #d8f3dc;
+            --bg-site: #f8f9fa;
+            --texto: #212529;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light);
-            color: #333;
+            font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            background-color: var(--bg-site);
+            color: var(--texto);
+            scroll-behavior: smooth;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+        /* Menu de Navegação */
+        nav {
+            background-color: var(--verde-escuro);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        h1, h2 {
-            color: var(--dark);
+
+        nav .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: var(--verde-claro);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: white;
+        }
+
+        /* Banner Principal (Hero) com Movimento */
+        .hero {
+            background: linear-gradient(135deg, var(--verde-escuro), var(--verde-principal));
+            color: white;
+            padding: 80px 20px;
             text-align: center;
         }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            animation: fecharSubida 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--verde-claro);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Seções do Site */
+        .section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--verde-escuro);
+            font-size: 32px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        /* Cards Informativos com Efeito de Passar o Mouse (Interatividade) */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--verde-folha);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: var(--verde-principal);
+            margin-top: 0;
+        }
+
+        /* Área do Simulador Técnico */
+        .simulador-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 600;
+            color: var(--verde-escuro);
         }
+
         select, input {
             width: 100%;
-            padding: 10px;
-            border: 2px solid var(--secondary);
+            padding: 12px;
+            border: 2px solid var(--verde-claro);
             border-radius: 6px;
-            box-sizing: border-box;
             font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
         }
+
+        select:focus, input:focus {
+            border-color: var(--verde-principal);
+            outline: none;
+        }
+
         button {
             width: 100%;
-            background-color: var(--primary);
+            background-color: var(--verde-principal);
             color: white;
             border: none;
-            padding: 12px;
+            padding: 15px;
             font-size: 18px;
+            font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.1s;
         }
+
         button:hover {
-            background-color: var(--dark);
+            background-color: var(--verde-escuro);
         }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Caixa de Resultado Dinâmica */
         #resultado {
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 6px;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 8px;
             display: none;
+            animation: surgir 0.5s ease-in-out;
         }
-        .sucesso {
-            background-color: #e8f5e9;
-            border-left: 5px solid var(--primary);
+
+        .resultado-conteudo {
+            border-left: 6px solid var(--verde-folha);
+            background: #f4faf6;
+            padding: 15px;
         }
-        .alerta {
-            background-color: #fff3e0;
-            border-left: 5px solid #ff9800;
+
+        /* Rodapé */
+        footer {
+            background-color: var(--verde-escuro);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        /* Animações CSS */
+        @keyframes fecharSubida {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes surgir {
+            from { opacity: 0; scale: 0.95; }
+            to { opacity: 1; scale: 1; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Monitor Verde 🌿</h1>
-    <p style="text-align: center; font-style: italic;">Agrinho 2026: Equilíbrio entre Produção e Ambiente</p>
-    <hr>
-    
-    <h2>Simulador de Irrigação Sustentável</h2>
-    
-    <div class="form-group">
-        <label for="cultura">Selecione a Cultura:</label>
-        <select id="cultura">
-            <option value="hortalicas">Hortaliças (Alface/Repolho)</option>
-            <option value="milho">Milho</option>
-            <option value="mandioca">Mandioca (Comum no nosso PR)</option>
-        </select>
-    </div>
+    <nav>
+        <a href="#" class="logo">Monitor Verde 🌿</a>
+        <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#tema">O Tema</a></li>
+            <li><a href="#simulador">Simulador</a></li>
+        </ul>
+    </nav>
 
-    <div class="form-group">
-        <label for="area">Tamanho da Área (em metros quadrados - m²):</label>
-        <input type="number" id="area" min="1" value="100">
-    </div>
+    <header class="hero" id="inicio">
+        <h1>Agro Forte, Futuro Sustentável</h1>
+        <p>Projeto para o Concurso Agrinho 2026: Desenvolvendo o equilíbrio perfeito entre a alta produção do campo e a preservação do meio ambiente.</p>
+    </header>
 
-    <div class="form-group">
-        <label for="sistema">Sistema de Irrigação Atual:</label>
-        <select id="sistema">
-            <option value="aspersao">Aspersão Comum (Desperdiça mais)</option>
-            <option value="gotejamento">Gotejamento (Foco na raiz)</option>
-        </select>
-    </div>
+    <section class="section" id="tema">
+        <h2 class="section-title">O Equilíbrio Entre Produção e Ambiente</h2>
+        <div class="grid-cards">
+            <div class="card">
+                <h3>🌾 Agro Forte</h3>
+                <p>O Paraná é gigante na produção de alimentos. Para manter essa força no futuro, o campo precisa usar tecnologia que aumente a colheita sem esgotar a terra.</p>
+            </div>
+            <div class="card">
+                <h3>💧 Ambiente Protegido</h3>
+                <p>Preservar nascentes, economizar água na irrigação e proteger o solo contra a erosão garante que as próximas gerações continuem produzindo com fartura.</p>
+            </div>
+            <div class="card">
+                <h3>🤖 Tecnologia Agrófila</h3>
+                <p>Sites, sensores e dados matemáticos ajudam o produtor rural a tomar decisões exatas, evitando o desperdício de recursos naturais preciosos.</p>
+            </div>
+        </div>
+    </section>
 
-    <button onclick="calcularImpacto()">Simular Impacto Ambiental</button>
+    <hr style="border: 0; height: 1px; background: #e0e0e0; max-width: 1000px; margin: 0 auto;">
 
-    <div id="resultado"></div>
-</div>
+    <section class="section" id="simulador">
+        <h2 class="section-title">Simulador Prático de Equilíbrio Ecológico</h2>
+        
+        <div class="simulador-box">
+            <p style="margin-top: 0; margin-bottom: 25px; text-align: center; color: #666;">
+                Selecione os dados abaixo para calcular em tempo real o impacto ecológico e a eficiência da sua produção.
+            </p>
 
-<script>
-function calcularImpacto() {
-    const cultura = document.getElementById('cultura').value;
-    const area = parseFloat(document.getElementById('area').value);
-    const sistema = document.getElementById('sistema').value;
-    const resultadoDiv = document.getElementById('resultado');
+            <div class="form-group">
+                <label for="cultura">Qual é a cultura plantada?</label>
+                <select id="cultura">
+                    <option value="hortalicas">Hortaliças do Paraná (Alface/Legumes)</option>
+                    <option value="milho">Grande Lavoura (Milho)</option>
+                    <option value="mandioca">Cultura Regional (Mandioca)</option>
+                </select>
+            </div>
 
-    if (isNaN(area) || area <= 0) {
-        alert("Por favor, digite uma área válida.");
-        return;
-    }
+            <div class="form-group">
+                <label for="area">Tamanho da Área de Plantio (em m²):</label>
+                <input type="number" id="area" min="1" value="500" placeholder="Ex: 500">
+            </div>
 
-    // Consumo médio de água por m² por dia (litros de forma simplificada para o modelo)
-    let consumoBasePorM2 = 0;
-    if (cultura === 'hortalicas') consumoBasePorM2 = 5;
-    if (cultura === 'milho') consumoBasePorM2 = 6;
-    if (cultura === 'mandioca') consumoBasePorM2 = 3;
+            <div class="form-group">
+                <label for="tecnologia">Método de Irrigação / Cuidado Usado:</label>
+                <select id="tecnologia">
+                    <option value="tradicional">Irrigação por Aspersão Tradicional (Desperdiça por evaporação)</option>
+                    <option value="sustentavel">Irrigação Inteligente por Gotejamento (Água direto na raiz)</option>
+                </select>
+            </div>
 
-    let consumoTotalDiario = consumoBasePorM2 * area;
-    let economia = 0;
-    let mensagem = "";
+            <button onclick="calcularEstrategia()">Analisar Equilíbrio do Projeto</button>
 
-    resultadoDiv.style.display = "block";
+            <div id="resultado"></div>
+        </div>
+    </section>
 
-    if (sistema === 'aspersao') {
-        // Se usa aspersão, mostra o quanto ele economizaria se mudasse para gotejamento (cerca de 30% de economia)
-        economia = consumoTotalDiario * 0.3;
-        resultadoDiv.className = "alerta";
-        mensagem = `
-            <h3>⚠️ Alerta de Desperdício</h3>
-            <p>Sua plantação consome cerca de <strong>${consumoTotalDiario.toFixed(0)} litros</strong> de água por dia.</p>
-            <p><strong>Dica Sustentável:</strong> Se você mudar para o sistema de <strong>Gotejamento</strong>, você economizará cerca de <strong>${economia.toFixed(0)} litros</strong> de água por dia, mantendo a produtividade forte e protegendo os mananciais do Paraná!</p>
-        `;
-    } else {
-        // Se já usa gotejamento, parabéns pelo foco ecológico
-        resultadoDiv.className = "sucesso";
-        mensagem = `
-            <h3>🌱 Parabéns! Agro Forte e Sustentável</h3>
-            <p>Usando o gotejamento, você gasta apenas <strong>${consumoTotalDiario.toFixed(0)} litros</strong> por dia.</p>
-            <p>Sua escolha economiza água preciosa e evita a erosão do solo. Esse é o verdadeiro equilíbrio entre produção e ambiente que o Paraná precisa!</p>
-        `;
-    }
+    <footer>
+        <p><strong>Monitor Verde</strong> - Projeto Prático de Programação</p>
+        <p>Concurso Agrinho 2026 | Desenvolvido por Estudantes de Pontal do Paraná - PR</p>
+    </footer>
 
-    resultadoDiv.innerHTML = mensagem;
-}
-</script>
+    <script>
+        function calcularEstrategia() {
+            const cultura = document.getElementById('cultura').value;
+            const area = parseFloat(document.getElementById('area').value);
+            const tecnologia = document.getElementById('tecnologia').value;
+            const resultadoDiv = document.getElementById('resultado');
 
+            if (isNaN(area) || area <= 0) {
+                alert("Por favor, digite um tamanho de área válido para o cálculo!");
+                return;
+            }
+
+            // Variável de consumo base de água por metro quadrado
+            let consumoBase = cultura === 'milho' ? 6 : (cultura === 'hortalicas' ? 5 : 3);
+            let consumoTotalDiario = consumoBase * area;
+            
+            resultadoDiv.style.display = "block";
+            let htmlConteudo = "";
+
+            if (tecnologia === 'tradicional') {
+                let economiaPossivel = consumoTotalDiario * 0.35; // Gotejamento economiza 35%
+                htmlConteudo = `
+                    <div class="resultado-conteudo" style="border-left-color: #e63946; background: #fff5f5;">
+                        <h3 style="color: #d62828; margin-top: 0;">⚠️ Diagnóstico: Alerta de Desperdício</h3>
+                        <p>Sua área de <strong>${area} m²</strong> está gastando aproximadamente <strong>${consumoTotalDiario.toFixed(0)} litros de água por dia</strong>.</p>
+                        <p><strong>Como alcançar o Futuro Sustentável?</strong> Se você mudar para o sistema de Gotejamento Inteligente, sua fazenda vai economizar <strong>${economiaPossivel.toFixed(0)} litros de água TODOS OS DIAS</strong>, mantendo a produção forte e protegendo os rios do nosso Paraná!</p>
+                    </div>
+                `;
+            } else {
+                htmlConteudo = `
+                    <div class="resultado-conteudo" style="border-left-color: #2a9d8f; background: #f0f9f8;">
+                        <h3 style="color: #2a9d8f; margin-top: 0;">🌱 Diagnóstico: Equilíbrio Perfeito Alcançado!</h3>
+                        <p>Excelente! Usando o gotejamento, sua produção consome apenas <strong>${(consumoTotalDiario * 0.65).toFixed(0)} litros por dia</strong> (uma economia real de 35%).</p>
+                        <p>Essa tecnologia prova o lema do Agrinho: a sua produção continua <strong>forte e lucrativa</strong>, mas o <strong>ambiente está protegido</strong> contra a escassez de água e a erosão do solo.</p>
+                    </div>
+                `;
+            }
+
+            resultadoDiv.innerHTML = htmlConteudo;
+        }
+    </script>
 </body>
 </html>
