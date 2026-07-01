@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Verde - Agrinho 2026</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --secondary: #81c784;
+            --dark: #1b5e20;
+            --light: #f1f8e9;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: var(--dark);
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--secondary);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: var(--dark);
+        }
+        #resultado {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 6px;
+            display: none;
+        }
+        .sucesso {
+            background-color: #e8f5e9;
+            border-left: 5px solid var(--primary);
+        }
+        .alerta {
+            background-color: #fff3e0;
+            border-left: 5px solid #ff9800;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Monitor Verde 🌿</h1>
+    <p style="text-align: center; font-style: italic;">Agrinho 2026: Equilíbrio entre Produção e Ambiente</p>
+    <hr>
+    
+    <h2>Simulador de Irrigação Sustentável</h2>
+    
+    <div class="form-group">
+        <label for="cultura">Selecione a Cultura:</label>
+        <select id="cultura">
+            <option value="hortalicas">Hortaliças (Alface/Repolho)</option>
+            <option value="milho">Milho</option>
+            <option value="mandioca">Mandioca (Comum no nosso PR)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="area">Tamanho da Área (em metros quadrados - m²):</label>
+        <input type="number" id="area" min="1" value="100">
+    </div>
+
+    <div class="form-group">
+        <label for="sistema">Sistema de Irrigação Atual:</label>
+        <select id="sistema">
+            <option value="aspersao">Aspersão Comum (Desperdiça mais)</option>
+            <option value="gotejamento">Gotejamento (Foco na raiz)</option>
+        </select>
+    </div>
+
+    <button onclick="calcularImpacto()">Simular Impacto Ambiental</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+function calcularImpacto() {
+    const cultura = document.getElementById('cultura').value;
+    const area = parseFloat(document.getElementById('area').value);
+    const sistema = document.getElementById('sistema').value;
+    const resultadoDiv = document.getElementById('resultado');
+
+    if (isNaN(area) || area <= 0) {
+        alert("Por favor, digite uma área válida.");
+        return;
+    }
+
+    // Consumo médio de água por m² por dia (litros de forma simplificada para o modelo)
+    let consumoBasePorM2 = 0;
+    if (cultura === 'hortalicas') consumoBasePorM2 = 5;
+    if (cultura === 'milho') consumoBasePorM2 = 6;
+    if (cultura === 'mandioca') consumoBasePorM2 = 3;
+
+    let consumoTotalDiario = consumoBasePorM2 * area;
+    let economia = 0;
+    let mensagem = "";
+
+    resultadoDiv.style.display = "block";
+
+    if (sistema === 'aspersao') {
+        // Se usa aspersão, mostra o quanto ele economizaria se mudasse para gotejamento (cerca de 30% de economia)
+        economia = consumoTotalDiario * 0.3;
+        resultadoDiv.className = "alerta";
+        mensagem = `
+            <h3>⚠️ Alerta de Desperdício</h3>
+            <p>Sua plantação consome cerca de <strong>${consumoTotalDiario.toFixed(0)} litros</strong> de água por dia.</p>
+            <p><strong>Dica Sustentável:</strong> Se você mudar para o sistema de <strong>Gotejamento</strong>, você economizará cerca de <strong>${economia.toFixed(0)} litros</strong> de água por dia, mantendo a produtividade forte e protegendo os mananciais do Paraná!</p>
+        `;
+    } else {
+        // Se já usa gotejamento, parabéns pelo foco ecológico
+        resultadoDiv.className = "sucesso";
+        mensagem = `
+            <h3>🌱 Parabéns! Agro Forte e Sustentável</h3>
+            <p>Usando o gotejamento, você gasta apenas <strong>${consumoTotalDiario.toFixed(0)} litros</strong> por dia.</p>
+            <p>Sua escolha economiza água preciosa e evita a erosão do solo. Esse é o verdadeiro equilíbrio entre produção e ambiente que o Paraná precisa!</p>
+        `;
+    }
+
+    resultadoDiv.innerHTML = mensagem;
+}
+</script>
+
+</body>
+</html>
